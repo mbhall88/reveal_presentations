@@ -1,0 +1,81 @@
+/* so that the header elements aren't capitilised */
+.slides h1, h2, h3, h4 {
+    text-transform: none !important;
+    font-weight: bold;
+}
+
+/* give the "text boxes" some padding either side so they dont touch the edges
+and make the standard text family the same as the rest of the theme*/
+.slides p {
+    padding-left: 60px;
+    padding-right: 60px;
+    font-family: "Quicksand", sans-serif;
+}
+
+/* Move subheading lower */
+#subheading {
+    padding: 150px;
+}
+
+/* move footnote lower on slide 3b */
+.slide3b small {
+    padding-top: 100px;
+}
+
+/* make all headers aligned in the top left corner */
+.header {
+    text-align: left;
+    top: 0;
+    left: 0;
+    position: fixed;
+}
+
+ /* underline the matches in the example on slide 4 */
+.slide4 .example span {
+    text-decoration: underline;
+}
+
+/* change the font of the digits in the slide 4 example */
+.slide4 .example {
+    font-family: monaco;
+    font-size: 1.3em;
+    color: #444444;
+}
+
+/* remove the box shadow that shows around pre elements */
+.reveal pre {
+    box-shadow: none;
+}
+
+/* have to do this or bigger code blocks require scrolling */
+.reveal pre code {
+    max-height: initial;
+}
+
+/* aligning the title for the code block on slide 4G */
+.slide4g small {
+    padding-top: 75px;
+    padding-bottom: 20px;
+}
+
+/* remove border from table and add shadow */
+#table {
+    border: none;
+    /* offset-x | offset-y | blur-radius | color */
+    box-shadow: 3px 3px 15px #888;
+}
+
+/* red highlight box around point of interest in table 3 */
+#highlight {
+    border: 3px solid red;
+    height: 30px;
+    width: 120px;
+    top: 305px;
+    right: 95px;
+    position: absolute;
+}
+
+/* styling for quote on slide 9d */
+.slide9d blockquote {
+    background-color: rgba(255, 255, 255, 0.50);
+}

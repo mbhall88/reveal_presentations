@@ -1,0 +1,469 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Template</title>
+
+		<link rel="stylesheet" href="../reveal.js/css/reveal.css">
+		<link rel="stylesheet" href="../reveal.js/css/theme/sky.css">
+		<link rel="stylesheet" href="pbwt.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="../reveal.js/lib/css/darcula.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../reveal.js/css/print/pdf.css' : '../reveal.js/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+				<!-- =========== SLIDE 1 Title =========== -->
+				<section>
+					<h3 class="title">Efficient haplotype matching and storage using the
+					positional Burrows-Wheeler transform (PBWT)</h3>
+					<p>
+					<p>
+						<small>Author: Richard Durbin</small>
+					</p>
+					<p id="subheading" class="title">Iqbal Group Journal Club</p>
+				</section>
+
+				<!-- =========== SLIDE 2 Key Message =========== -->
+				<section>
+				<div class="header">
+					<h2>Key Message</h2>
+				</div>
+				<div class="fragment">
+					<p>
+						Strong compression of haplotype data
+					</p>
+					<p>
+						Speed up haplotype matching by factor of
+						$M$
+					</p>
+				</div>
+				</section>
+
+				<!-- =========== SLIDE 3 Core Messages =========== -->
+				<section>
+
+					<!-- 3A -->
+					<section>
+						<h3 class="header">Core Message</h3>
+						<p>
+							Compress haplotype data up to <strong>100 times more</strong>
+							than <code>gzip</code>
+						</p>
+					</section>
+
+					<!-- 3B -->
+					<section class="slide3b">
+						<h3 class="header">Core Message</h3>
+						<p>
+							Find all set-maximal matches at position in linear
+							time $O(NM)$ and then for new sequence(s) in $O(N)$<sup>*</sup>
+						</p>
+						<small>* Provided the index array fits in memory</small>
+					</section>
+
+					<!-- 3C -->
+					<section>
+						<h3 class="header">Core Message</h3>
+						<p>
+							Provides efficient framework for seed matching by
+							statistical genotyping algorithms
+						</p>
+					</section>
+				</section>
+
+				<!-- =========== SLIDE 4 Section 2.1 =========== -->
+				<section class="slide4">
+
+					<!-- 4A -->
+					<section class="slide4a">
+						<h4 class="header">Section 2.1 - Derivation of prefix arrays</h4>
+						<p>
+							$a_k$ is an array containing the ordering of
+							sequences for the given $k$
+						</p>
+						<p class="example">
+							0011010 <strong>1</strong> 00 <br>
+							11<span>11010</span> <strong>1</strong> 11 <br>
+							11111<span>10</span> <strong>1</strong> 00 <br>
+						</p>
+						<p>
+							So here, $a_7 = [0,1,2]$ <br>
+							Whereas $a_9 = [0,2,1]$
+						</p>
+					</section>
+
+					<!-- 4B -->
+					<section>
+						<h4 class="header">Section 2.1 - Derivation of prefix arrays</h4>
+						<p>
+							$d_k$ is an array containing the "longest common prefix"
+							at $k$.
+						</p>
+						<p class="example">
+							0011010 <strong>1</strong> 00 <br>
+							11<span>11010</span> <strong>1</strong> 11 <br>
+							11111<span>10</span> <strong>1</strong> 00 <br>
+						</p>
+						<p>
+							So here, $d_7 = [0,2,5]$
+						</p>
+					</section>
+
+					<!-- 4C -->
+					<section>
+						<h4 class="header">Section 2.1 - Derivation of prefix arrays</h4>
+						<p>You can see that at a given $k$ the sequences with
+						the longest match up to $k-1$ will cluster together.</p>
+						<p class="example">
+							0011010 <strong>1</strong> 00 <br>
+							11<span>11010</span> <strong>1</strong> 11 <br>
+							11111<span>10</span> <strong>1</strong> 00 <br>
+						</p>
+					</section>
+
+					<!-- 4D -->
+					<section>
+						<h4 class="header">Section 2.1 - Derivation of prefix arrays</h4>
+						<p>
+							In the below example, $y_0$ and $y_1$ are <strong>not</strong>
+							 <emph>set-maximal</emph>.
+						</p>
+						<p class="example">
+							0011010 <strong>1</strong> 00 <br>
+							11<span>11010</span> <strong>1</strong> 11 <br>
+							11111<span>10</span> <strong>1</strong> 00 <br>
+						</p>
+						<p class="fragment">
+							The match can be extended...
+						</p>
+					</section>
+
+					<!-- 4E -->
+					<section>
+						<h4 class="header">Section 2.1 - Derivation of prefix arrays</h4>
+						<p>
+							In the below example, $y_0$ and $y_1$ are <strong>not</strong>
+							 <emph>set-maximal</emph>.
+						</p>
+						<p class="example">
+							00110101 <strong>0</strong> 0 <br>
+							11<span>110101</span> <strong>1</strong> 1 <br>
+							11111<span>101</span> <strong>0</strong> 0 <br>
+						</p>
+						<p>
+							The match can be extended...
+						</p>
+					</section>
+
+					<!-- 4F -->
+					<section>
+						<h4 class="header">Section 2.1 - Derivation of prefix arrays</h4>
+						<p>A <emph>set-maximal</emph> match is like that seen
+						between $y_0$ and $y_1$ from $[2, k)$ and there is no
+						$y_i$ with a match longer that includes the interval
+						$[2,k)$</p>
+						<p class="example">
+							00110101 <strong>0</strong> 0 <br>
+							11<span>110101</span> <strong>1</strong> 1 <br>
+							11111<span>101</span> <strong>0</strong> 0 <br>
+						</p>
+					</section>
+
+					<!-- 4G -->
+					<section class="slide4g">
+						<h4 class="header">Section 2.1 - Derivation of prefix arrays</h4>
+						<small>Algorithm 2 - Build prefix and divergent arrays.
+						Update $a$ and $d$ to $a_{k+1}$ and $d_{k+1}$</small>
+						<pre>
+<code class="python" data-trim>
+u,v = 0
+p,q = k+1
+a,b,d,e = []
+for i in range(M):
+	if d_k[i] > p:
+		p = d_k[i]
+	if d_k[i] > q:
+		q = d_k[i]
+	if y[i][k] == 0:
+		a[u] = a_k[i]
+		d[u] = p
+		u += 1
+		p = 0
+	elif y[i][k] == 1:
+		b[v] = a_k[i]
+		e[v] = q
+		v += 1
+		q = 0
+return a + b, d + e
+</code>
+						</pre>
+					</section>
+				</section>
+
+				<!-- =========== SLIDE 5 Section 2.2 =========== -->
+				<section>
+
+					<!-- 5A -->
+					<section>
+						<h4 class="header">Section 2.2 - Finding all matches within $X$ longer than a minimum length $L$</h4>
+						<p>
+							Sequences with matches larger than a given $L$ will
+							occur in blocks - separated by blocks where it isn't
+							($d_{k}[i]>k-L$)
+						</p>
+						<p class="fragment">
+							Therefore just need to keep track of last time
+							$d_{k}[i] > k - L$
+						</p>
+					</section>
+
+					<!-- 5B -->
+					<section>
+						<h4 class="header">Section 2.2 - Finding all matches within $X$ longer than a minimum length $L$</h4>
+						<p>
+							This is implemented in <strong>Algorithm 3</strong>
+							and runs in $O[max(NM, matches)]$ <br> <br>
+							Can be done in the same sweep to calculate $a$ and $d$
+						</p>
+					</section>
+				</section>
+
+				<!-- =========== SLIDE 6 Section 2.3 =========== -->
+				<section>
+
+					<!-- 6A -->
+					<section>
+						<h4 class="header">Section 2.3 - Finding all set-maximal matches within $X$ in linear time</h4>
+						<p>
+							Given previous methods, for any sequence $y_i$ at
+							position $k$, it's set-maximal match <strong>must</strong>
+							be immediately prior or following.
+						</p>
+					</section>
+
+					<!-- 6B -->
+					<section>
+						<h4 class="header">Section 2.3 - Finding all set-maximal matches within $X$ in linear time</h4>
+						<p>
+							Find your interval of longest matches at $k$ - Algorithm 3
+						</p>
+						<p class="fragment">
+							If $y_j[k] \neq y_i[k]$ then this is set-maximal.
+						</p>
+						<p class="fragment">
+							Otherwise, the match can be extended and is therefore
+							not set-maximal.
+						</p>
+						<p class="fragment">
+							Runs in $O(NM)$ - Algorithm 4
+						</p>
+					</section>
+				</section>
+
+				<!-- =========== SLIDE 7 Section 2.4 =========== -->
+				<section>
+					<h4 class="header">Section 2.4 - Finding all set-maximal matches from a new sequence $z$ to $X$</h4>
+					<p>
+						Implemented in <strong>Algorithm 5</strong> is a way
+						to determine the set-maximal matches of a new sequence(s).
+					</p>
+					<p class="fragment">
+						This can be done in $O(N)$
+					</p>
+					<p class="fragment">
+						I can't quite follow how the algorithm works.
+					</p>
+				</section>
+
+				<!-- =========== SLIDE 8  Section 2.5 =========== -->
+				<section>
+
+					<!-- 8A -->
+					<section>
+						<h4 class="header">Section 2.5 - Compact representation of $X$</h4>
+						<p>
+							Storing $a_k$ and $d_k$ for all $k$ would use more
+							space than the original binary data.
+						</p>
+						<p class="fragment">
+							Not needed all the time, but are needed if wanting
+							to analyse a new sequence.
+						</p>
+					</section>
+
+					<!-- 8B -->
+					<section>
+						<h4 class="header">Section 2.5 - Compact representation of $X$</h4>
+						<p>
+							Because there is long stretches of identical values
+							in the sequences the PBWT should be storable in
+							smaller-than-original space.
+						</p>
+						<p class="fragment">
+							Could be even more space-efficient by storing only
+							a subset of the $a$ and $d$ arrays, say every 32 or
+							64 positions.
+						</p>
+						<p class="fragment">
+							Makes mention of scope for improving storage of $d$
+							using Huffman coding.
+						</p>
+					</section>
+				</section>
+
+				<!-- =========== SLIDE 9 Results =========== -->
+				<section>
+
+					<!-- 9A -->
+					<section>
+						<h3 class="header">Results</h3>
+						<p>
+							<img src="imgs/table1.png" alt="" id="table">
+							Non-linear benefit for compression as $M$ increases.
+						</p>
+					</section>
+
+					<!-- 9B -->
+					<section>
+						<h3 class="header">Results</h3>
+						<p>
+							<img src="imgs/table2.png" alt="" id="table">
+							Clearly demonstrates the linear time to find
+							set-maximal matches.
+						</p>
+					</section>
+
+					<!-- 9C -->
+					<section>
+						<h3 class="header">Results</h3>
+						<p>
+							<img src="imgs/table3.png" alt="" id="table">
+							<em>Indexed</em> takes constant time up until the point where
+							it runs out of memory.
+							<div id="highlight"></div>
+						</p>
+					</section>
+
+					<!-- 9D -->
+					<section class="slide9d">
+						<h3 class="header">Results</h3>
+						<p>
+							<blockquote>
+								&ldquo;I therefore conclude that the PBWT-based
+								approach can be hunreds of times faster than a
+								direct search approach and find matches in time
+								independent of the reference panel size, as
+								conjectured above, so long as the associated
+								index arrays fit in memory.&rdquo;
+							</blockquote>
+						</p>
+					</section>
+				</section>
+
+				<!-- =========== SLIDE 10 Points to ponder =========== -->
+				<section>
+
+					<!-- 10A -->
+					<section>
+						<h3 class="header">Points to Ponder</h3>
+						<p>
+							<blockquote >
+								&ldquo;Although the algorithms are presented for binary
+								data, they can be extended to multi-allelic
+								data with a little care.&rdquo;
+							</blockquote>
+						</p>
+					</section>
+
+					<!-- 10B -->
+					<section>
+						<h3 class="header">Points to Ponder</h3>
+						<p>
+							All algorithms require exact matching.
+						</p>
+						<p class="fragment">
+							Could use as a seeding method for statistical
+							genotype algorithms. <br> <br>
+							<small>Mentions possible speedup to BEAGLE</small>
+						</p>
+					</section>
+
+					<!-- 10C -->
+					<section>
+						<h3 class="header">Points to Ponder</h3>
+						<p>
+							More direct approach would be to work from both ends
+							of the sequences.
+						</p>
+						<p class="fragment">
+							At some point $k$ we have information about matches in
+							both directions.
+						</p>
+						<p class="fragment">
+							Can then assign alleles for all sequences at $k$ before
+							moving to next $k$
+						</p>
+					</section>
+				</section>
+
+				<!-- =========== SLIDE 11 Conclusion =========== -->
+				<section>
+					<section>
+						<h2 class="header">Conclusion</h2>
+						<p>
+							Series of algorithms to generate prefix array data structures
+							for haplotype sequences and for strong compression.
+						</p>
+						<p class="fragment">
+							Removes factor of $M$ for search time of new sequences.
+							Allowing matches for ten's of thousands of sequences in
+							minutes.
+						</p>
+					</section>
+					<section>
+						<h2 class="header">Conclusion</h2>
+						<p>
+							<strong>Importantly</strong>, this could provide a
+							way of storing linkage information for a genome graph. <br> <br>
+							<small>As this can be challenging due to memory limitations.</small>
+						</p>
+					</section>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal.js/lib/js/head.min.js"></script>
+		<script src="../reveal.js/js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: '../reveal.js/plugin/markdown/marked.js' },
+					{ src: '../reveal.js/plugin/markdown/markdown.js' },
+					{ src: '../reveal.js/plugin/notes/notes.js', async: true },
+					{ src: '../reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../reveal.js/plugin/math/math.js', async: true }
+				],
+				transitionSpeed: "fast",
+				transition: "none"
+			});
+		</script>
+	</body>
+</html>

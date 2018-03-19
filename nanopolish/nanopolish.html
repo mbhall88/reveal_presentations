@@ -221,7 +221,7 @@
         <section>
             <!-- 6A -->
             <section>
-                <h4 class="header">Computing improved consensus sequence</h4>
+                <h3 class="header">Improved consensus sequence</h3>
                 <p>
                     <img src="imgs/nanopolish_analysis_workflow.png" alt="" id="analysis_workflow">
                 </p>
@@ -229,12 +229,87 @@
 
             <!-- 6B -->
             <section>
-                <h4 class="header">Section 2.2 - Finding all matches within $X$ longer than a minimum length $L$</h4>
+                <h3 class="header">Improved consensus sequence</h3>
+                <div class="lists">
+                    <ol>
+                        <li>
+                            Uncorrected reads mapped to draft genome $G$
+                        </li>
+                        <li>
+                            $G$ is divided into 10Kbp segments with 200bp overlaps.
+                        </li>
+                        <li>
+                            Anchors $A$ selected every 50bp within each segment.
+                        </li>
+                        <li>
+                            Compute new sequence between $A_i$ and $A_{i+2}$.
+                            Progressively improves event-to-assembly alignment.
+                        </li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- 6C -->
+            <section>
+                <h3 class="header">Improved consensus sequence</h3>
                 <p>
-                    This is implemented in <strong>Algorithm 3</strong>
-                    and runs in $O[max(NM, matches)]$ <br> <br>
-                    Can be done in the same sweep to calculate $a$ and $d$
+                    Let $\mathcal{D}=\{e_{i},e_{i+1},…,e_{j}\}$ be the set of event subsequences anchored between $A_i$ and
+                    $A_{i+2}$. <br>
+                    The algorithm tries to compute a consensus sequence $C$ that maximises the probability of data
+                    $\mathcal{D}$. <br>
                 </p>
+            </section>
+
+            <!-- 6D -->
+            <section>
+                <h3 class="header">Improved consensus sequence</h3>
+                <p>
+                    This is done by taking the consensus sequence $\mathcal{C}$ between the anchors and proposing a set
+                    of candidate sequences. <br>
+                    Use the HMM to select the sequence that maximises the probability of the data. <br>
+                    As calculating all possible permutations of $\mathcal{C}$ would be too large, <strong>two methods are used
+                    to calculate candidates sequences</strong>.
+                </p>
+            </section>
+
+            <!-- 6E -->
+            <section>
+                <h3 class="header">Improved consensus sequence</h3>
+                <p>
+                     <strong>Block replacement</strong> makes edits based on sampling alternative substrings from the
+                    reads. <br>
+
+                    <strong>Mutation</strong> (inspired by Quiver) calculates all substrings within one edit distance
+                    of the consensus subsequence <br> <br> <br>
+                    <small>See
+                    <a href="https://media.nature.com/original/nature-assets/nmeth/journal/v12/n8/extref/nmeth.3444-S1.pdf">Supplementary Methods</a>
+                    for a more in-depth description of these two methods.</small>
+
+                </p>
+            </section>
+
+            <!-- 6F -->
+            <section>
+                <h3 class="header">Improved consensus sequence</h3>
+                <div class="lists">
+                    <ol>
+                        <li>Calculate all <code>block replacement</code> candidate sequences.</li>
+                        <li>Calculate the probability of all sequences and select the best candidate $C'$.</li>
+                        <li>If $C' \neq C$ then $C\leftarrow C'$ and the process is continued.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- 6G -->
+            <section>
+                <h3 class="header">Improved consensus sequence</h3>
+                <div class="lists">
+                    <ol>
+                        <li value="4">When no improvements are made the process is repeated, but with <code>mutation</code>.</li>
+                        <li value="5">Once <code>mutation </code>finishes, the consensus sequence is updated.</li>
+                    </ol>
+                    <p>This process is run on all 10Kbp segments. They are then joined together at the end using the 200bp overlaps.</p>
+                </div>
             </section>
         </section>
 

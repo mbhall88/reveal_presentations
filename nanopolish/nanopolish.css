@@ -12,6 +12,15 @@ and make the standard text family the same as the rest of the theme*/
     font-family: "Quicksand", sans-serif;
 }
 
+.slides .lists {
+    font-family: "Quicksand", sans-serif;
+
+}
+
+.slides .lists li {
+    margin: 20px 0;
+}
+
 /* Move subheading lower */
 #subheading {
     padding: 150px;
@@ -23,6 +32,7 @@ and make the standard text family the same as the rest of the theme*/
     top: 0;
     left: 0;
     position: fixed;
+    padding-bottom: 10px;
 }
 
 /* remove the box shadow that shows around pre elements */

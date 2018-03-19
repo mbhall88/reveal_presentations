@@ -215,104 +215,19 @@
                     </div>
                 </div>
             </section>
-
-            <!-- 4D -->
-            <section>
-                <h4 class="header">Section 2.1 - Derivation of prefix arrays</h4>
-                <p>
-                    In the below example, $y_0$ and $y_1$ are <strong>not</strong>
-                    <emph>set-maximal</emph>.
-                </p>
-                <p class="example">
-                    0011010 <strong>1</strong> 00 <br>
-                    11<span>11010</span> <strong>1</strong> 11 <br>
-                    11111<span>10</span> <strong>1</strong> 00 <br>
-                </p>
-                <p class="fragment">
-                    The match can be extended...
-                </p>
-            </section>
-
-            <!-- 4E -->
-            <section>
-                <h4 class="header">Section 2.1 - Derivation of prefix arrays</h4>
-                <p>
-                    In the below example, $y_0$ and $y_1$ are <strong>not</strong>
-                    <emph>set-maximal</emph>.
-                </p>
-                <p class="example">
-                    00110101 <strong>0</strong> 0 <br>
-                    11<span>110101</span> <strong>1</strong> 1 <br>
-                    11111<span>101</span> <strong>0</strong> 0 <br>
-                </p>
-                <p>
-                    The match can be extended...
-                </p>
-            </section>
-
-            <!-- 4F -->
-            <section>
-                <h4 class="header">Section 2.1 - Derivation of prefix arrays</h4>
-                <p>A <emph>set-maximal</emph> match is like that seen
-                    between $y_0$ and $y_1$ from $[2, k)$ and there is no
-                    $y_i$ with a match longer that includes the interval
-                    $[2,k)$</p>
-                <p class="example">
-                    00110101 <strong>0</strong> 0 <br>
-                    11<span>110101</span> <strong>1</strong> 1 <br>
-                    11111<span>101</span> <strong>0</strong> 0 <br>
-                </p>
-            </section>
-
-            <!-- 4G -->
-            <section class="slide4g">
-                <h4 class="header">Section 2.1 - Derivation of prefix arrays</h4>
-                <small>Algorithm 2 - Build prefix and divergent arrays.
-                    Update $a$ and $d$ to $a_{k+1}$ and $d_{k+1}$</small>
-                <pre>
-<code class="python" data-trim>
-u,v = 0
-p,q = k+1
-a,b,d,e = []
-for i in range(M):
-	if d_k[i] > p:
-		p = d_k[i]
-	if d_k[i] > q:
-		q = d_k[i]
-	if y[i][k] == 0:
-		a[u] = a_k[i]
-		d[u] = p
-		u += 1
-		p = 0
-	elif y[i][k] == 1:
-		b[v] = a_k[i]
-		e[v] = q
-		v += 1
-		q = 0
-return a + b, d + e
-</code>
-						</pre>
-            </section>
         </section>
 
-        <!-- =========== SLIDE 5 Section 2.2 =========== -->
+        <!-- =========== SLIDE 6 Computing Consensus =========== -->
         <section>
-
-            <!-- 5A -->
+            <!-- 6A -->
             <section>
-                <h4 class="header">Section 2.2 - Finding all matches within $X$ longer than a minimum length $L$</h4>
+                <h4 class="header">Computing improved consensus sequence</h4>
                 <p>
-                    Sequences with matches larger than a given $L$ will
-                    occur in blocks - separated by blocks where it isn't
-                    ($d_{k}[i]>k-L$)
-                </p>
-                <p class="fragment">
-                    Therefore just need to keep track of last time
-                    $d_{k}[i] > k - L$
+                    <img src="imgs/nanopolish_analysis_workflow.png" alt="" id="analysis_workflow">
                 </p>
             </section>
 
-            <!-- 5B -->
+            <!-- 6B -->
             <section>
                 <h4 class="header">Section 2.2 - Finding all matches within $X$ longer than a minimum length $L$</h4>
                 <p>

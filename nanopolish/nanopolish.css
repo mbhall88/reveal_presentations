@@ -58,6 +58,7 @@ and make the standard text family the same as the rest of the theme*/
     padding-right: 0;
 }
 
+/*align equations to the left and shrink font*/
 #transition_equations .MathJax_Display .MathJax .math {
     font-size: 26px;
     text-align: left;
@@ -66,4 +67,12 @@ and make the standard text family the same as the rest of the theme*/
 #emission_equations .MathJax_Display .MathJax .math {
     font-size: 30px;
     text-align: left;
+}
+
+/*box shadow for analysis workflow image*/
+#analysis_workflow {
+    border: none;
+    -webkit-box-shadow: 6px 6px 25px 6px rgba(0,0,0,0.5);
+    -moz-box-shadow: 6px 6px 25px 6px rgba(0,0,0,0.5);
+    box-shadow: 6px 6px 25px 2px rgba(0,0,0,0.5);
 }

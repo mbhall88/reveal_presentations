@@ -57,3 +57,13 @@ and make the standard text family the same as the rest of the theme*/
     padding-left: 0;
     padding-right: 0;
 }
+
+#transition_equations .MathJax_Display .MathJax .math {
+    font-size: 26px;
+    text-align: left;
+}
+
+#emission_equations .MathJax_Display .MathJax .math {
+    font-size: 30px;
+    text-align: left;
+}

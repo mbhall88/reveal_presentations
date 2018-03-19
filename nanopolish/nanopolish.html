@@ -167,33 +167,53 @@
                 </div>
             </section>
 
-            <!-- 4B -->
+            <!-- 5B -->
             <section>
-                <h4 class="header">Section 2.1 - Derivation of prefix arrays</h4>
-                <p>
-                    $d_k$ is an array containing the "longest common prefix"
-                    at $k$.
-                </p>
-                <p class="example">
-                    0011010 <strong>1</strong> 00 <br>
-                    11<span>11010</span> <strong>1</strong> 11 <br>
-                    11111<span>10</span> <strong>1</strong> 00 <br>
-                </p>
-                <p>
-                    So here, $d_7 = [0,2,5]$
-                </p>
+                <h3 class="header">HMM Profile - Transition Probabilities</h3>
+                <div id="hmm_wrap">
+                    <div class="hmm">
+                        <img src="imgs/hmm.png" alt="HMM">
+                    </div>
+                    <div class="hmm">
+                        <p id="transition_equations">
+                            \[\begin{align*}
+                            &t(M_{s_{i-1}}\rightarrow K_{s_i})=f(|\mu_{s_{i-1}}-\mu_{s_i}|) \\
+
+                            &t(M_{s_{i-1}}\rightarrow E_{s_{i-1}})=p_{me}(1-t(M_{s_{i-1}}\rightarrow K_{s_i})) \\
+
+                            &tM_{s_{i-1}}\rightarrow M_{s_i})=1-t(M_{s_{i-1}}\rightarrow K_{s_i})-t(M_{s_{i-1}}\rightarrow E_{s_{i-1}})
+                            \\
+
+                            &t(E_{s_{i-1}}\rightarrow E_{s_{i-1}})=p_{ee} \\
+
+                            &t(E_{s_{i-1}}\rightarrow M_{s_i})=1-t(E_{s_{i-1}}\rightarrow E_{s_{i-1}}) \\
+
+                            &t(K_{s_{i-1}}\rightarrow K_{s_i})=f(|\mu_{s_{i-1}}-\mu_{s_i}|) \\
+
+                            &t(K_{s_{i-1}}\rightarrow M_{s_i})=1-t(K_{s_{i-1}}\rightarrow K_{s_i}) \\
+                            \end{align*} \]
+                        </p>
+                    </div>
+                </div>
             </section>
 
-            <!-- 4C -->
+            <!-- 5C -->
             <section>
-                <h4 class="header">Section 2.1 - Derivation of prefix arrays</h4>
-                <p>You can see that at a given $k$ the sequences with
-                    the longest match up to $k-1$ will cluster together.</p>
-                <p class="example">
-                    0011010 <strong>1</strong> 00 <br>
-                    11<span>11010</span> <strong>1</strong> 11 <br>
-                    11111<span>10</span> <strong>1</strong> 00 <br>
-                </p>
+                <h3 class="header">HMM Profile - Transition Probabilities</h3>
+                <div id="hmm_wrap">
+                    <div class="hmm">
+                        <img src="imgs/hmm.png" alt="HMM">
+                    </div>
+                    <div class="hmm">
+                        <p id="emission_equations">
+                            \[\begin{align*}
+                            &P(e_i|\pi_k=(i,M_{s_j}))=\mathcal{N}(\mu_{s_j},\sigma^2_{s_j}) \\
+
+                            &P(e_i|\pi_k=(i,E_{s_j}))=\mathcal{N}(\mu_{s_j},(v\sigma_{s_j})^2)
+                            \end{align*} \]
+                        </p>
+                    </div>
+                </div>
             </section>
 
             <!-- 4D -->

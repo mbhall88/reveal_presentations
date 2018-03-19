@@ -52,7 +52,7 @@ and make the standard text family the same as the rest of the theme*/
 }
 
 /*make the dives sit side by side on the HMM profile slides*/
-#hmm_wrap {
+.hmm_wrap {
     width:100%;
     margin:0 auto;
 }

@@ -40,3 +40,20 @@ and make the standard text family the same as the rest of the theme*/
 #eq4e .MathJax_Display {
     font-size: 32px;
 }
+
+/*make the dives sit side by side on the HMM profile slides*/
+#hmm_wrap {
+    width:100%;
+    margin:0 auto;
+}
+.hmm {
+    float:left;
+    width:48%;
+    margin:0 auto;
+}
+
+.hmm p {
+    text-align: left;
+    padding-left: 0;
+    padding-right: 0;
+}

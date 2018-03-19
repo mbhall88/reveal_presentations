@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="nanopolish.css">
 
     <!-- Theme used for syntax highlighting of code -->
-    <link rel="stylesheet" href="../reveal.js/lib/css/atom-one-dark.css">
+    <!--<link rel="stylesheet" href="../reveal.js/lib/css/atom-one-dark.css">-->
 
     <!-- Printing and PDF exports -->
     <script>
@@ -37,17 +37,39 @@
 
         <!-- =========== SLIDE 2 Key Message =========== -->
         <section>
-            <p>
-                Software tool for using signal-level nanopore data to: <br>
+            <div>
+                <p>Software tool for using signal-level nanopore data to:</p>
                 <ul>
-                    <li>Improve a consensus sequence</li>
-                    <li>Call variants</li>
-                    <li>Detect methylated bases</li>
+                    <li><p>Improve a consensus sequence</p></li>
+                    <li><p>Call variants</p></li>
+                    <li><p>Detect methylated bases</p></li>
                 </ul>
-            </p>
+            </div>
         </section>
 
-        <!-- =========== SLIDE 3 Core Messages =========== -->
+        <!-- =========== SLIDE 3 Program Overview =========== -->
+        <section data-markdown>
+            <textarea data-template>
+                ```
+                nanopolish extract: extract reads in FASTA or FASTQ format from
+                    a directory of FAST5 files
+
+                nanopolish call-methylation: predict genomic bases that may be
+                    methylated
+
+                nanopolish variants: detect SNPs and indels with respect to a
+                    reference genome
+
+                nanopolish variants --consensus: calculate an improved consensus
+                    sequence for a draft genome assembly
+
+                nanopolish eventalign: align signal-level events to k-mers of a
+                    reference genome
+                ```
+            </textarea>
+        </section>
+
+        <!-- =========== SLIDE 4 Core Messages =========== -->
         <section>
 
             <!-- 3A -->

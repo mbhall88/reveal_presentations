@@ -41,8 +41,8 @@
                 <p>Software tool for using signal-level nanopore data to:</p>
                 <ul>
                     <li><p>Improve a consensus sequence</p></li>
-                    <li><p>Call variants</p></li>
-                    <li><p>Detect methylated bases</p></li>
+                    <li class="fragment"><p>Call variants</p></li>
+                    <li class="fragment"><p>Detect methylated bases</p></li>
                 </ul>
             </div>
         </section>
@@ -235,13 +235,13 @@
                         <li>
                             Uncorrected reads mapped to draft genome $G$
                         </li>
-                        <li>
+                        <li class="fragment">
                             $G$ is divided into 10Kbp segments with 200bp overlaps.
                         </li>
                         <li>
                             Anchors $A$ selected every 50bp within each segment.
                         </li>
-                        <li>
+                        <li class="fragment">
                             Compute new sequence between $A_i$ and $A_{i+2}$.
                             Progressively improves event-to-assembly alignment.
                         </li>
@@ -294,8 +294,8 @@
                 <div class="lists">
                     <ol>
                         <li>Calculate all <code>block replacement</code> candidate sequences.</li>
-                        <li>Calculate the probability of all sequences and select the best candidate $C'$.</li>
-                        <li>If $C' \neq C$ then $C\leftarrow C'$ and the process is continued.</li>
+                        <li class="fragment">Calculate the probability of all sequences and select the best candidate $C'$.</li>
+                        <li class="fragment">If $C' \neq C$ then $C\leftarrow C'$ and the process is continued.</li>
                     </ol>
                 </div>
             </section>
@@ -306,93 +306,75 @@
                 <div class="lists">
                     <ol>
                         <li value="4">When no improvements are made the process is repeated, but with <code>mutation</code>.</li>
-                        <li value="5">Once <code>mutation </code>finishes, the consensus sequence is updated.</li>
+                        <li value="5" class="fragment">Once <code>mutation </code>finishes, the consensus sequence is updated.</li>
                     </ol>
                     <p>This process is run on all 10Kbp segments. They are then joined together at the end using the 200bp overlaps.</p>
                 </div>
             </section>
         </section>
 
-        <!-- =========== SLIDE 6 Section 2.3 =========== -->
+        <!-- =========== SLIDE 7 Variant Calling =========== -->
         <section>
-
-            <!-- 6A -->
+            <!-- 7A -->
             <section>
-                <h4 class="header">Section 2.3 - Finding all set-maximal matches within $X$ in linear time</h4>
-                <p>
-                    Given previous methods, for any sequence $y_i$ at
-                    position $k$, it's set-maximal match <strong>must</strong>
-                    be immediately prior or following.
-                </p>
+                <h3 class="header">Variant calling</h3>
+                <div class="lists">
+                    <ol>
+                        <li>
+                            Find candidate variants from alignment. Positions with >20x coverage and minor allele
+                            frequency at least 0.2
+                        </li>
+                        <li class="fragment">Batch into clusters separated by at least 10bp.</li>
+                        <li class="fragment">Generate all haplotypes for cluster and compute likelihood for each.</li>
+                        <li class="fragment">Highest likelihood is output to VCF (if not reference).</li>
+                    </ol>
+                </div>
             </section>
 
-            <!-- 6B -->
+            <!-- 7B -->
             <section>
-                <h4 class="header">Section 2.3 - Finding all set-maximal matches within $X$ in linear time</h4>
-                <p>
-                    Find your interval of longest matches at $k$ - Algorithm 3
-                </p>
-                <p class="fragment">
-                    If $y_j[k] \neq y_i[k]$ then this is set-maximal.
-                </p>
-                <p class="fragment">
-                    Otherwise, the match can be extended and is therefore
-                    not set-maximal.
-                </p>
-                <p class="fragment">
-                    Runs in $O(NM)$ - Algorithm 4
-                </p>
+                <h3 class="header">Variant calling - haplotype generation</h3>
+                <div>
+                    <p>Candidates had to be clustered due to context of bases in the pore.</p>
+                    <p class="fragment">
+                        For candidate haplotype generation, all combinations of a cluster are generated, $2^n$, where $n$ is
+                        the number of candidate variants.
+                    </p>
+                    <p class="fragment">Likelihood of each haplotype is calculated using the HMM.</p>
+                </div>
+
+            </section>
+
+            <!-- 7C -->
+            <section>
+                <h3 class="header">Variant calling</h3>
+                <div id="variant_img">
+                    <img src="https://media.nature.com/lw926/nature-assets/nature/journal/v530/n7589/images_supplementary/nature16996-sf5.jpg"
+                         alt="https://media.nature.com/lw926/nature-assets/nature/journal/v530/n7589/images_supplementary/nature16996-sf5.jpg">
+                </div>
+
             </section>
         </section>
 
-        <!-- =========== SLIDE 7 Section 2.4 =========== -->
-        <section>
-            <h4 class="header">Section 2.4 - Finding all set-maximal matches from a new sequence $z$ to $X$</h4>
-            <p>
-                Implemented in <strong>Algorithm 5</strong> is a way
-                to determine the set-maximal matches of a new sequence(s).
-            </p>
-            <p class="fragment">
-                This can be done in $O(N)$
-            </p>
-            <p class="fragment">
-                I can't quite follow how the algorithm works.
-            </p>
-        </section>
-
-        <!-- =========== SLIDE 8  Section 2.5 =========== -->
+        <!-- =========== SLIDE 8  Methylation detection=========== -->
         <section>
 
             <!-- 8A -->
             <section>
-                <h4 class="header">Section 2.5 - Compact representation of $X$</h4>
+                <h3 class="header">Methylation detection</h3>
                 <p>
-                    Storing $a_k$ and $d_k$ for all $k$ would use more
-                    space than the original binary data.
-                </p>
-                <p class="fragment">
-                    Not needed all the time, but are needed if wanting
-                    to analyse a new sequence.
+                    Training data used was PCR-amplified <i>E. coli</i> DNA that was either treated or untreated with the
+                    <code>CpG</code> methyltransferase <i>M.SssI</i>. <br>
+                    Found the signal shift was dependent on the position of the 5-mC in a given k-mer.
                 </p>
             </section>
 
             <!-- 8B -->
             <section>
                 <h4 class="header">Section 2.5 - Compact representation of $X$</h4>
-                <p>
-                    Because there is long stretches of identical values
-                    in the sequences the PBWT should be storable in
-                    smaller-than-original space.
-                </p>
-                <p class="fragment">
-                    Could be even more space-efficient by storing only
-                    a subset of the $a$ and $d$ arrays, say every 32 or
-                    64 positions.
-                </p>
-                <p class="fragment">
-                    Makes mention of scope for improving storage of $d$
-                    using Huffman coding.
-                </p>
+                <div>
+                    <img id="meth_pos" src="imgs/methylation_position.jpg" alt="Methylation k-mer position">
+                </div>
             </section>
         </section>
 

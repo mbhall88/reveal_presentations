@@ -86,3 +86,32 @@ and make the standard text family the same as the rest of the theme*/
     -moz-box-shadow: 6px 6px 25px 6px rgba(0,0,0,0.5);
     box-shadow: 6px 6px 25px 2px rgba(0,0,0,0.5);
 }
+
+/* styling the variant calling image */
+#variant_img {
+    height: 550px;
+    bottom: 50px;
+    position: fixed;
+    text-align: center;
+    left: 25%;
+}
+
+#variant_img img {
+    border: none;
+    -webkit-box-shadow: 6px 6px 25px 6px rgba(0,0,0,0.5);
+    -moz-box-shadow: 6px 6px 25px 6px rgba(0,0,0,0.5);
+    box-shadow: 6px 6px 25px 2px rgba(0,0,0,0.5);
+}
+
+/* styling the methylation position image*/
+#meth_pos {
+    border: none;
+    -webkit-box-shadow: 6px 6px 25px 6px rgba(0,0,0,0.5);
+    -moz-box-shadow: 6px 6px 25px 6px rgba(0,0,0,0.5);
+    box-shadow: 6px 6px 25px 2px rgba(0,0,0,0.5);
+    height: 550px;
+    bottom: 50px;
+    position: fixed;
+    text-align: center;
+    left: 25%;
+}

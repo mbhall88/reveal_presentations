@@ -69,35 +69,81 @@
             </textarea>
         </section>
 
-        <!-- =========== SLIDE 4 Core Messages =========== -->
+        <!-- =========== SLIDE 4 Modelling events =========== -->
         <section>
 
-            <!-- 3A -->
+            <!-- 4A -->
             <section>
-                <h3 class="header">Core Message</h3>
+                <h3 class="header">Modelling events</h3>
                 <p>
-                    Compress haplotype data up to <strong>100 times more</strong>
-                    than <code>gzip</code>
+                    The probability of observing an event $e_i$ given that the 5-mer $k$ is the true sequence is
+                </p>
+                    $$P(e_i|k, \Theta)=P(e_i|k, \mu_k, \sigma_k)=\mathcal{N}(\mu_k, \sigma_k^2)$$
+
+            </section>
+
+            <!-- 4B -->
+            <section>
+                <h3 class="header">Modelling events</h3>
+                <p>
+                    In order to model a sequence $S$ we represent it as a sequence of 5-mers $S=(s_1, s_2,…,s_m)$. <br>
+                    In a perfect world there would be a one-to-one mapping of events $e$ to 5-mers $s$. In this utopia
+                    the probability of the data could be calculated as
+                </p>
+                $$P(e_1,e_2,...,e_n|s_1,s_2,...,s_n,\Theta)=\prod_{i=1}^nP(e_i|s_i,\mu_{s_i},\sigma_{s_i})$$
+            </section>
+
+            <!-- 4C -->
+            <section>
+                <h3 class="header">Modelling events - example</h3>
+                <p>
+                    In reality though there are two other situations which can arise. <br>
+                    <br>
+                    <strong>Skip event</strong> - 5-mer has passed through the pore without being detected <br>
+                    <br>
+                    <strong>Split event</strong> - 5-mer has emitted multiple events.
                 </p>
             </section>
 
-            <!-- 3B -->
-            <section class="slide3b">
-                <h3 class="header">Core Message</h3>
+            <!-- 4D -->
+            <section>
+                <h3 class="header">Modelling events - example</h3>
                 <p>
-                    Find all set-maximal matches at position in linear
-                    time $O(NM)$ and then for new sequence(s) in $O(N)$<sup>*</sup>
+                    $S=(ACGTA,CGTAA,GTAAC,TAACT)$ <br> <br>
+                    Starting at $ACGTA$ we can either go to the next 5-mer, $CGTAA$, <strong>skip</strong> to $GTAAC$,
+                    or <strong>split</strong> the event and stay where we are - emitting another event.
                 </p>
-                <small>* Provided the index array fits in memory</small>
             </section>
 
-            <!-- 3C -->
-            <section>
-                <h3 class="header">Core Message</h3>
+            <!-- 4E -->
+            <section class="slide4e">
+                <h3 class="header">Modelling events - Enter the HMM</h3>
                 <p>
-                    Provides efficient framework for seed matching by
-                    statistical genotyping algorithms
+                    $\pi$ is a path through the system (hidden state), where an entry is a pair $\pi_i=(i, s_j)$ which says
+                    at step $i$ the system emitted event $i$ from 5-mer $s_j$.
+
+                    The transition probability is calculated as $P(\pi_i|\pi_{i-1},S)$. <br>
                 </p>
+
+               <div id="eq4e">
+                   $$
+                    P(e_1,e_2,...,e_n|s_1,s_2,...,s_n,\Theta)=\prod_{i=1}^nP(e_i|s_i,\mu_{s_i},\sigma_{s_i})P(\pi_i|\pi_{i-1}, S)
+                    $$
+               </div>
+            </section>
+
+            <!-- 4F -->
+            <section>
+                <h3 class="header">Modelling events - Enter the HMM</h3>
+                <p>
+                    We can then calculate the probability of the data given $S$ by summing over all the possible paths
+                    with the Forward algorithm
+                </p>
+                <div>
+                    $$
+                    P(e_1,e_2,...,e_n|S,\Theta)=\sum_{\pi}P(\pi, e_1, e_2,...,e_n|S,\Theta)
+                    $$
+                </div>
             </section>
         </section>
 

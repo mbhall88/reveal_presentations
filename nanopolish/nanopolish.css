@@ -35,3 +35,8 @@ and make the standard text family the same as the rest of the theme*/
     max-height: initial;
     max-width: initial;
 }
+
+/* equation on slide 4E is too big */
+#eq4e .MathJax_Display {
+    font-size: 32px;
+}

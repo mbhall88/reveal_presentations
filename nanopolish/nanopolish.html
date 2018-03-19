@@ -21,6 +21,7 @@
         link.href = window.location.search.match( /print-pdf/gi ) ? '../reveal.js/css/print/pdf.css' : '../reveal.js/css/print/paper.css';
         document.getElementsByTagName( 'head' )[0].appendChild( link );
     </script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
 </head>
 <body>
 <div class="reveal">
@@ -31,7 +32,12 @@
             <h2 class="title">Nanopolish</h2>
             <p><a href="https://github.com/jts/nanopolish" target="_blank">https://github.com/jts/nanopolish</a></p>
             <p>
-                <small>Author: Jared Simpson</small>
+                Author: Jared Simpson
+            </p>
+            <a class="github-button" href="https://github.com/jts/nanopolish" aria-label="View on GitHub" data-size="large">View on GitHub</a>
+            <p>
+                <br> <br>
+                <small>Slides: Michael Hall</small>
             </p>
         </section>
 
@@ -371,10 +377,42 @@
 
             <!-- 8B -->
             <section>
-                <h4 class="header">Section 2.5 - Compact representation of $X$</h4>
+                <h3 class="header">Methylation detection</h3>
                 <div>
                     <img id="meth_pos" src="imgs/methylation_position.jpg" alt="Methylation k-mer position">
                 </div>
+            </section>
+
+            <!-- 8C -->
+            <section>
+                <h3 class="header">Methylation detection</h3>
+                <p>
+                    One limitation: can't distinguish mixed methylation in close
+                    proximity. Assigns the same methylation status to <code>CpG</code> sites within 10bp of each other.
+                </p>
+                <p class="fragment">
+                    In paper the method achieved 94% accuracy and called 77% of sites.
+                </p>
+                <p class="fragment">
+                    Natural DNA can have DNA damage and 5-hydroxy-mC which this model does not account for
+                    - could reduce accuracy.
+                </p>
+            </section>
+
+            <!-- 8D -->
+            <section>
+                <h3 class="header">Methylation detection</h3>
+                <p>
+                    One limitation: can't distinguish mixed methylation in close
+                    proximity. Assigns the same methylation status to <code>CpG</code> sites within 10bp of each other.
+                </p>
+                <p class="fragment">
+                    In paper the method achieved 94% accuracy and called 77% of sites.
+                </p>
+                <p class="fragment">
+                    Natural DNA can have DNA damage and 5-hydroxy-mC which this model does not account for
+                    - could reduce accuracy.
+                </p>
             </section>
         </section>
 
@@ -518,5 +556,6 @@
         transition: "none"
     });
 </script>
+
 </body>
 </html>

@@ -84,7 +84,20 @@
                 <p>
                     The probability of observing an event $e_i$ given that the 5-mer $k$ is the true sequence is
                 </p>
-                    $$P(e_i|k, \Theta)=P(e_i|k, \mu_k, \sigma_k)=\mathcal{N}(\mu_k, \sigma_k^2)$$
+                $$P(e_i|k, \Theta_v) = \mathcal{N}(a+b\mu_k+ct_i,(d\theta_k)^2)$$
+                <p class="fragment">
+                    <br>
+                    <small>
+                        $e_i=$ measured current level for event $i$, <br>
+                        $t_i=$ time at which event $i$ is observed, <br>
+                        $k=$ k-mer, <br>
+                        $\mu_k=$ mean current level for k-mer $k$, <br>
+                        $\theta_k=$ standard deviation for current level of $k$, <br>
+                        $a=$ shift parameter, $b=$ scale parameter, $c=$ drift parameter, $d=$ variance parameter. <br>
+                        As $a-d$ are not provided for R9 data (RNN basecaller), set $c=0$ and solve a linear least
+                        squares regression to calculate $a, b, $ and $d$.
+                    </small>
+                </p>
 
             </section>
 
@@ -118,6 +131,10 @@
                     $S=(ACGTA,CGTAA,GTAAC,TAACT)$ <br> <br>
                     Starting at $ACGTA$ we can either go to the next 5-mer, $CGTAA$, <strong>skip</strong> to $GTAAC$,
                     or <strong>split</strong> the event and stay where we are - emitting another event.
+                </p>
+                <p>
+                    <small>Later in development there has been two other states added. <strong>Softclip</strong> and
+                    <strong>bad</strong>.</small>
                 </p>
             </section>
 
@@ -373,6 +390,10 @@
                     <code>CpG</code> methyltransferase <i>M.SssI</i>. <br>
                     Found the signal shift was dependent on the position of the 5-mC in a given k-mer.
                 </p>
+                <p class="fragment">
+                    Methylation calling algorithm follows similar steps to variant calling. In this case the candidates
+                    are clusters based on presence of <code>CG</code> dinucleotides.
+                </p>
             </section>
 
             <!-- 8B -->
@@ -403,16 +424,25 @@
             <section>
                 <h3 class="header">Methylation detection</h3>
                 <p>
-                    One limitation: can't distinguish mixed methylation in close
-                    proximity. Assigns the same methylation status to <code>CpG</code> sites within 10bp of each other.
+                    The log-likelihood ratio assessment compares methylated and unmethylated versions of the k-mer as
                 </p>
-                <p class="fragment">
-                    In paper the method achieved 94% accuracy and called 77% of sites.
+                $$
+                \sum^2_{j=1}\log(\mathcal{L}(S_M|e_{j,1},...,e_{j,n_j}))- \log(\mathcal{L}(S_R|e_{j,1},...,e_{j,n_j}))
+                $$
+                <p>
+                    <small>
+                        $S_R=$ substring of reference genome containing at least one <code>CG</code> dinucleotide
+                        $S_M=$ modified copy of $S_R$ with all <code>CG</code> change to <code>MG</code>.
+                    </small>
                 </p>
-                <p class="fragment">
-                    Natural DNA can have DNA damage and 5-hydroxy-mC which this model does not account for
-                    - could reduce accuracy.
-                </p>
+            </section>
+
+            <!-- 8E -->
+            <section>
+                <h3 class="header">Methylation detection</h3>
+                <div>
+                    <img id="meth_hap" src="imgs/methylation_haplotype.png" alt="Methylation haplotype IGV">
+                </div>
             </section>
         </section>
 

@@ -123,3 +123,7 @@ and make the standard text family the same as the rest of the theme*/
     -moz-box-shadow: 6px 6px 25px 6px rgba(0,0,0,0.5);
     box-shadow: 6px 6px 25px 2px rgba(0,0,0,0.5);
 }
+
+.references li {
+    font-size: 0.7em;
+}

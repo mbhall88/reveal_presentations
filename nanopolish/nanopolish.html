@@ -38,6 +38,9 @@
             <p>
                 <br> <br>
                 <small>Slides: Michael Hall</small>
+                <br>
+                <a class="github-button" href="https://github.com/mbhall88" aria-label="Follow @mbhall88 on GitHub">Follow @mbhall88</a>
+                <a href="https://twitter.com/mbhall88?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @mbhall88</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
             </p>
         </section>
 
@@ -446,123 +449,65 @@
             </section>
         </section>
 
-        <!-- =========== SLIDE 9 Results =========== -->
+        <!-- =========== SLIDE 9 Recent Updates =========== -->
         <section>
-
-            <!-- 9A -->
-            <section>
-                <h3 class="header">Results</h3>
-                <p>
-                    <img src="imgs/table1.png" alt="" id="table">
-                    Non-linear benefit for compression as $M$ increases.
-                </p>
-            </section>
-
-            <!-- 9B -->
-            <section>
-                <h3 class="header">Results</h3>
-                <p>
-                    <img src="imgs/table2.png" alt="" id="table">
-                    Clearly demonstrates the linear time to find
-                    set-maximal matches.
-                </p>
-            </section>
-
-            <!-- 9C -->
-            <section>
-                <h3 class="header">Results</h3>
-                <p>
-                    <img src="imgs/table3.png" alt="" id="table">
-                    <em>Indexed</em> takes constant time up until the point where
-                    it runs out of memory.
-                <div id="highlight"></div>
-                </p>
-            </section>
-
-            <!-- 9D -->
-            <section class="slide9d">
-                <h3 class="header">Results</h3>
-                <p>
-                <blockquote>
-                    &ldquo;I therefore conclude that the PBWT-based
-                    approach can be hunreds of times faster than a
-                    direct search approach and find matches in time
-                    independent of the reference panel size, as
-                    conjectured above, so long as the associated
-                    index arrays fit in memory.&rdquo;
-                </blockquote>
-                </p>
-            </section>
+            <h3 class="header">Recent updates</h3>
+            <div class="lists">
+                <ul>
+                    <li>Multi-threaded input gives up to 6 times speed-up.</li>
+                    <li>Indexing from sequencing summary file.</li>
+                    <li>Dynamic scheduling policy for BAM files increases multi-threading efficiency.</li>
+                    <li>Phasing coming soon.</li>
+                </ul>
+            </div>
         </section>
 
-        <!-- =========== SLIDE 10 Points to ponder =========== -->
+        <!-- =========== SLIDE 10 References =========== -->
         <section>
-
-            <!-- 10A -->
-            <section>
-                <h3 class="header">Points to Ponder</h3>
-                <p>
-                <blockquote >
-                    &ldquo;Although the algorithms are presented for binary
-                    data, they can be extended to multi-allelic
-                    data with a little care.&rdquo;
-                </blockquote>
-                </p>
-            </section>
-
-            <!-- 10B -->
-            <section>
-                <h3 class="header">Points to Ponder</h3>
-                <p>
-                    All algorithms require exact matching.
-                </p>
-                <p class="fragment">
-                    Could use as a seeding method for statistical
-                    genotype algorithms. <br> <br>
-                    <small>Mentions possible speedup to BEAGLE</small>
-                </p>
-            </section>
-
-            <!-- 10C -->
-            <section>
-                <h3 class="header">Points to Ponder</h3>
-                <p>
-                    More direct approach would be to work from both ends
-                    of the sequences.
-                </p>
-                <p class="fragment">
-                    At some point $k$ we have information about matches in
-                    both directions.
-                </p>
-                <p class="fragment">
-                    Can then assign alleles for all sequences at $k$ before
-                    moving to next $k$
-                </p>
-            </section>
+            <h3 class="header">References</h3>
+            <div class="lists references">
+                <ul>
+                    <li>
+                        Consensus algorithm and first methods: <br>
+                        <a href="https://www.nature.com/articles/nmeth.3444" target="_blank">
+                            <small>Loman, N. J., Quick, J., & Simpson, J. T. (2015). A complete bacterial genome assembled de novo using only nanopore sequencing data. Nature Methods 64(2), p. 10-12.</small>
+                        </a>
+                    </li>
+                    <li>
+                        Variant calling method introduced: <br>
+                        <a href="https://www.nature.com/articles/nature16996" target="_blank">
+                            <small>Quick, J., Loman, N. J., Duraffour, S., Simpson, J. T., Severi, E., Cowley, L., ... Carroll, M. W. (2016). Real. Nature 64(2), p. 10-12.</small>
+                        </a>
+                    </li>
+                    <li>
+                        Methylation detection method introduced: <br>
+                        <a href="https://www.nature.com/articles/nmeth.4184" target="_blank"><small>
+                            Simpson, J. T., Workman, R. E., Zuzarte, P. C., David, M., Dursi, L. J., & Timp, W. (2017). Detecting DNA cytosine methylation using nanopore sequencing. Nature Methods 64(2), p. 10-12.
+                        </small></a>
+                    </li>
+                    <li>
+                        The project docs: <br>
+                        <a href="https://nanopolish.readthedocs.io/en/latest/index.html" target="_blank">https://nanopolish.readthedocs.io/en/latest/index.html</a>
+                    </li>
+                    <li>
+                        Jared's fantastic lab blog: <br>
+                        <a href="https://simpsonlab.github.io/blog/" target="_blank">https://simpsonlab.github.io/blog/</a>
+                    </li>
+                    <li>
+                        The GitHub repository: <br>
+                        <a href="https://github.com/jts/nanopolish" target="_blank">https://github.com/jts/nanopolish</a>
+                    </li>
+                </ul>
+            </div>
         </section>
 
-        <!-- =========== SLIDE 11 Conclusion =========== -->
+        <!-- =========== SLIDE 11 End =========== -->
         <section>
-            <section>
-                <h2 class="header">Conclusion</h2>
-                <p>
-                    Series of algorithms to generate prefix array data structures
-                    for haplotype sequences and for strong compression.
-                </p>
-                <p class="fragment">
-                    Removes factor of $M$ for search time of new sequences.
-                    Allowing matches for ten's of thousands of sequences in
-                    minutes.
-                </p>
-            </section>
-            <section>
-                <h2 class="header">Conclusion</h2>
-                <p>
-                    <strong>Importantly</strong>, this could provide a
-                    way of storing linkage information for a genome graph. <br> <br>
-                    <small>As this can be challenging due to memory limitations.</small>
-                </p>
-            </section>
+            <a href="https://mbhall88.github.io/reveal_presentations/nanopolish/nanopolish.html" target="_blank">
+                <small>https://mbhall88.github.io/reveal_presentations/nanopolish/nanopolish.html</small>
+            </a>
+            <a class="github-button" href="https://github.com/mbhall88" data-size="large" aria-label="Follow @mbhall88 on GitHub">Follow @mbhall88</a>
+            <a href="https://twitter.com/mbhall88?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @mbhall88</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
         </section>
     </div>
 </div>

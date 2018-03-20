@@ -127,3 +127,9 @@ and make the standard text family the same as the rest of the theme*/
 .references li {
     font-size: 0.7em;
 }
+
+#slides_link {
+    font-size: 0.70em;
+    text-align: left;
+    color: #333333;
+}
